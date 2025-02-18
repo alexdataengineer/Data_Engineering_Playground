@@ -1,0 +1,14 @@
+name: 'etl_project'
+version: '1.0.0'
+config-version: 2
+
+profile: 'sqlserver'
+
+model-paths: ["models"]
+
+models:
+  etl_project:
+    +materialized: table
+
+
+

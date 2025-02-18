@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: dbo
+    schema: dbo
+    database: master
+    tables:
+      - name: players_data_2024
+

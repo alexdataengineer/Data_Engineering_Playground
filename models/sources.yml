@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: dbo
+    database: master
+    schema: dbo
+    tables:
+      - name: players_data-2024_2025  
+      - name: googl_data_2020_2025_cleaned            
+
+
