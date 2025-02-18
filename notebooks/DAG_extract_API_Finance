@@ -1,0 +1,86 @@
+from airflow import DAG
+from airflow.operators.python_operator import PythonOperator
+from datetime import datetime, timedelta
+import pandas as pd
+import pyodbc
+from alpha_vantage.timeseries import TimeSeries
+
+# Definir argumentos padrão da DAG
+default_args = {
+    "owner": "airflow",
+    "depends_on_past": False,
+    "start_date": datetime(2024, 1, 1),
+    "retries": 1,
+    "retry_delay": timedelta(minutes=5),
+}
+
+# Nome da DAG
+dag = DAG(
+    "alpha_vantage_to_sql_server",
+    default_args=default_args,
+    description="Extrai dados da Alpha Vantage e insere no SQL Server diariamente",
+    schedule_interval="0 10 * * *",  # Executa todo dia às 10h UTC
+    catchup=False,
+)
+
+# Função para extrair os dados e salvar no SQL Server
+def extract_and_load():
+    # Configuração da API Alpha Vantage
+    api_key = "S2RDNJMGA6ZXKSXP"
+    symbol = "AAPL"  
+    interval = "1min"
+
+    # Configuração do SQL Server
+    server = "ALEXSANDER"
+    database = "master"
+    table_name = "stock_data"
+
+    # Conectar ao SQL Server
+    conn = pyodbc.connect(
+        f"DRIVER={{SQL Server}};SERVER={server};DATABASE={database};Trusted_Connection=yes;"
+    )
+    cursor = conn.cursor()
+
+    # Baixar os dados
+    ts = TimeSeries(key=api_key, output_format="pandas")
+    data, meta_data = ts.get_intraday(symbol=symbol, interval=interval, outputsize="full")
+
+    data.columns = ["Open", "High", "Low", "Close", "Volume"]
+    data.reset_index(inplace=True)
+    data.rename(columns={"date": "Date"}, inplace=True)
+    data["Date"] = pd.to_datetime(data["Date"])
+
+    cursor.execute(f"""
+        IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '{table_name}')
+        BEGIN
+            CREATE TABLE {table_name} (
+                id INT IDENTITY(1,1) PRIMARY KEY,
+                Date DATETIME,
+                [Open] FLOAT,
+                High FLOAT,
+                Low FLOAT,
+                [Close] FLOAT,
+                Volume BIGINT
+            )
+        END
+    """)
+    conn.commit()
+
+    for _, row in data.iterrows():
+        cursor.execute(f"""
+            INSERT INTO {table_name} (Date, [Open], High, Low, [Close], Volume)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, row["Date"], row["Open"], row["High"], row["Low"], row["Close"], row["Volume"])
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+extract_task = PythonOperator(
+    task_id="extract_and_load_stock_data",
+    python_callable=extract_and_load,
+    dag=dag,
+)
+
+extract_task
