@@ -9,6 +9,10 @@ sqlserver:
       windows_login: True
       encrypt: True
       trust_cert: True
+      query_timeout: 600  # Aumenta o timeout para 10 minutos
+      extra:
+        Connection Timeout=600  # Aumenta o timeout do ODBC
   target: dev
+
 
 

@@ -8,7 +8,11 @@ model-paths: ["models"]
 
 models:
   etl_project:
-    +materialized: table
+    +materialized: table  
+
+    views:
+      +materialized: view  
+
 
 
 
