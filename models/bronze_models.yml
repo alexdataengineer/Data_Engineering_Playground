@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: default
+    database: dbt_project_catalog
+    schema: default
+    tables:
+      - name: orders
+      - name: products
+      - name: reviews
+      - name: users
+
+      
