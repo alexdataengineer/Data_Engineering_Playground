@@ -1,1 +1,3 @@
-SELECT * FROM dbt_project_catalog.default.orders
+SELECT *
+FROM {{ source('default', 'orders') }}
+
