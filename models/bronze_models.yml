@@ -6,6 +6,11 @@ sources:
     schema: default
     tables:
       - name: orders
+        freshness:
+          warn_after:
+            count: 365
+            period: day
+        loaded_at_field: created_at
       - name: products
       - name: reviews
       - name: users
