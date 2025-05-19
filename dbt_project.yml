@@ -7,7 +7,11 @@ profile: 'sqlserver'
 model-paths: ["models"]
 
 models:
-  +materialized: table
+  +materialized: table  
+
+  gold:  
+    +materialized: view  # sobrescreve para os modelos da pasta gold
+
 
 
 
