@@ -7,7 +7,18 @@ profile: 'sqlserver'
 model-paths: ["models"]
 
 models:
-  +materialized: table  
+  dbt_project:
+    +materialized: table
+
+    bronze:
+      +schema: bronze
+
+    silver:
+      +schema: silver
+
+    gold:
+      +schema: gold
+
 
 
 

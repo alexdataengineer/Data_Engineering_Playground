@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: gold_daily_avg_rating
+    config:
+      schema: gold
