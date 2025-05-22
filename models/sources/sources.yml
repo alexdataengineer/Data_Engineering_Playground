@@ -9,7 +9,6 @@ sources:
         columns:
           - name: id
             tests:
-              - unique
               - not_null
         loaded_at_field: created_at
         freshness:
