@@ -1,11 +1,28 @@
 version: 2
 
 sources:
-  - name: dbo
-    database: master  # Nome do banco no SQL Server
-    schema: dbo       # Schema onde a tabela está
+  - name: default
+    database: dbt_project_catalog
+    schema: default
     tables:
-      - name: stock_data  
+      - name: orders
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+        loaded_at_field: created_at
+        freshness:
+          warn_after:
+            count: 365
+            period: day
+
+      - name: products
+
+      - name: reviews
+
+      - name: users
+
 
       
 
