@@ -2,18 +2,15 @@
     config(
         materialized='incremental',
         tags=['bronze', 'orders'],
-        unique_key=['id']
+        unique_key=['id'],
+        indexes=[
+            {'columns': ['user_id']},
+            {'columns': ['product_id']},
+            {'columns': ['order_purchase_date']}
+        ]
     )
 }}
 
-/*
-    Bronze layer for orders data.
-    This model:
-    - Performs initial data validation
-    - Applies basic type casting
-    - Handles incremental processing
-    - Adds metadata columns
-*/
 
 WITH source_data AS (
     SELECT 
@@ -65,15 +62,55 @@ validated_data AS (
         CAST(payment_type AS STRING) as payment_type,
         CAST(order_status AS STRING) as order_status,
         
+        -- Calculated fields
+        CAST(quantity * unit_price AS DECIMAL(10,2)) as total_amount,
+        CAST(quantity * unit_price + freight_value AS DECIMAL(10,2)) as total_amount_with_freight,
+        
+        -- Order metrics
+        CASE 
+            WHEN order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL 
+            THEN DATEDIFF(day, order_purchase_date, order_delivered_customer_date)
+            ELSE NULL 
+        END as delivery_time_days,
+        
+        CASE 
+            WHEN order_status = 'delivered' AND order_delivered_carrier_date IS NOT NULL 
+            THEN DATEDIFF(day, order_purchase_date, order_delivered_carrier_date)
+            ELSE NULL 
+        END as carrier_delivery_time_days,
+        
+        -- Payment metrics
+        CASE 
+            WHEN payment_installments > 1 THEN 'installment'
+            ELSE 'single_payment'
+        END as payment_method_type,
+        
+        -- Status tracking
+        CASE 
+            WHEN order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL THEN 'completed'
+            WHEN order_status = 'shipped' THEN 'in_transit'
+            WHEN order_status = 'processing' THEN 'processing'
+            ELSE 'pending'
+        END as order_status_category,
+        
         -- Metadata
         CURRENT_TIMESTAMP() as _loaded_at,
-        '{{ invocation_id }}' as _run_id
+        '{{ invocation_id }}' as _run_id,
+        '{{ env_var("DBT_CLOUD_RUN_ID", "manual") }}' as _dbt_run_id
     FROM source_data
     WHERE id IS NOT NULL  -- Ensure primary key is not null
       AND user_id IS NOT NULL  -- Ensure required fields are not null
       AND product_id IS NOT NULL
       AND quantity > 0  -- Basic business rule validation
       AND unit_price > 0
+      AND order_purchase_date IS NOT NULL  -- Required timestamp
+      AND order_status IS NOT NULL  -- Required status
+      AND payment_type IS NOT NULL  -- Required payment info
+      AND LENGTH(TRIM(id)) > 0  -- Ensure no empty strings
+      AND LENGTH(TRIM(user_id)) > 0
+      AND LENGTH(TRIM(product_id)) > 0
+      AND LENGTH(TRIM(order_status)) > 0
+      AND LENGTH(TRIM(payment_type)) > 0
 )
 
 SELECT * FROM validated_data
