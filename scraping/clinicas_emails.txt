@@ -1,0 +1,8 @@
+=== EMAILS DE CLÍNICAS ENCONTRADOS ===
+Data: 2025-06-22 22:48:01
+Total de clínicas: 1
+
+1. Artmed - O maior Ecossistema de Educação em Saúde do Brasil
+   URL: https://www.medicinanet.com.br/
+   Emails: artmed1@artmed.com
+
