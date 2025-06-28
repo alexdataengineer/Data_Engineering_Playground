@@ -6,3 +6,5 @@ logs/
 target/
 dbt_project.lock
 
+
+.databricks
