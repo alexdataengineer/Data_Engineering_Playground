@@ -1,105 +1,105 @@
 # 🚀 Data Engineering Playground
 
-Este repositório é um **workspace pessoal** para explorar, prototipar e construir soluções de engenharia de dados usando **Python**, **PySpark**, **Airflow**, **dbt**, **Databricks** e outras tecnologias modernas.
+This repository is a **personal workspace** for exploring, prototyping, and building data engineering solutions using **Python**, **PySpark**, **Airflow**, **dbt**, **Databricks**, and other modern technologies.
 
-## 📁 Estrutura Organizada por Projetos
+## 📁 Project Structure
 
-### 🏗️ **Infraestrutura & Orquestração**
-- `dags/` - Apache Airflow DAGs para orquestração de pipelines
-- `docker-composer/` - Ambientes Docker para desenvolvimento local
-- `databricks/` - Configurações e assets do Databricks
-- `dbt/` - Projeto dbt com modelos bronze/silver/gold
+### 🏗️ Infrastructure & Orchestration
+- `dags/` - Apache Airflow DAGs for pipeline orchestration
+- `docker-composer/` - Docker environments for local development
+- `databricks/` - Databricks configurations and assets
+- `dbt/` - dbt project with bronze/silver/gold models
 
-### 📊 **Projetos de Análise de Dados**
-- `cosgrove/` - Sistema completo de análise da planilha Cosgrove Pulse
-- `finance/` - Pipelines e análises de dados financeiros
-- `tesla/` - Análises específicas sobre dados da Tesla
+### 📊 Data Analysis Projects
+- `cosgrove/` - Complete system for Cosgrove Pulse spreadsheet analysis
+- `finance/` - Financial data pipelines and analysis
+- `tesla/` - Tesla-specific data analytics
 
-### 🕷️ **Web Scraping & Coleta**
-- `scraping/` - Scripts de web scraping para coleta de dados
-- `apis/` - Integrações com APIs externas
+### 🕷️ Web Scraping & Data Collection
+- `scraping/` - Web scraping scripts for data collection
+- `apis/` - Integrations with external APIs
 
-### 📈 **Dashboards & Visualização**
-- `dashboards/` - Dashboards Streamlit e outras visualizações
-- `notebooks/` - Jupyter notebooks para EDA e prototipagem
+### 📈 Dashboards & Visualization
+- `dashboards/` - Streamlit dashboards and other visualizations
+- `notebooks/` - Jupyter notebooks for EDA and prototyping
 
-### 🧠 **Machine Learning**
-- `ml/` - Scripts e modelos de machine learning
-- `analytics/` - Análises avançadas e modelagem
+### 🧠 Machine Learning
+- `ml/` - Machine learning scripts and models
+- `analytics/` - Advanced analytics and modeling
 
-### 🛠️ **Utilitários & Scripts**
-- `utils/` - Scripts utilitários e helpers
-- `scripts/` - Scripts de automação e processamento
+### 🛠️ Utilities & Scripts
+- `utils/` - Utility scripts and helpers
+- `scripts/` - Automation and processing scripts
 
-## 🧰 Stack Tecnológico
+## 🧰 Tech Stack
 
-### **Core Technologies**
-- **Python 3.x** - Linguagem principal
-- **Apache Spark (PySpark)** - Processamento distribuído
-- **Apache Airflow** - Orquestração de workflows
-- **dbt (Data Build Tool)** - Transformação de dados
-- **Databricks** - Plataforma de analytics
+### Core Technologies
+- **Python 3.x** - Main programming language
+- **Apache Spark (PySpark)** - Distributed processing
+- **Apache Airflow** - Workflow orchestration
+- **dbt (Data Build Tool)** - Data transformation
+- **Databricks** - Analytics platform
 
-### **Frameworks & Libraries**
-- **Streamlit** - Dashboards interativos
-- **Pandas/NumPy** - Manipulação de dados
-- **Plotly/Matplotlib** - Visualizações
+### Frameworks & Libraries
+- **Streamlit** - Interactive dashboards
+- **Pandas/NumPy** - Data manipulation
+- **Plotly/Matplotlib** - Visualizations
 - **Requests/BeautifulSoup** - Web scraping
-- **Docker** - Containerização
+- **Docker** - Containerization
 
-### **Databases & Storage**
-- **SQL Server** - Banco de dados principal
-- **Azure Data Lake** - Armazenamento de dados
-- **Delta Lake** - Formato de dados
+### Databases & Storage
+- **SQL Server** - Main database
+- **Azure Data Lake** - Data storage
+- **Delta Lake** - Data format
 
-## 🚀 Projetos Principais
+## 🚀 Main Projects
 
-### 📊 **Cosgrove Pulse Analyzer**
-Sistema completo para análise e visualização de dados da planilha "The Cosgrove Pulse - NEXGEN.xlsx"
-- Análise automática de métricas de ocupação
-- Dashboard interativo com Streamlit
-- Cálculos de KPIs em tempo real
+### 📊 Cosgrove Pulse Analyzer
+Complete system for analysis and visualization of "The Cosgrove Pulse - NEXGEN.xlsx" spreadsheet
+- Automatic occupancy metrics analysis
+- Interactive dashboard with Streamlit
+- Real-time KPI calculations
 
-### 🕷️ **Web Scraping Suite**
-Coleção de scripts para coleta automatizada de dados
-- Scrapers para clínicas e empresas
-- Coleta de emails e informações de contato
-- Processamento e limpeza de dados
+### 🕷️ Web Scraping Suite
+Collection of scripts for automated data collection
+- Scrapers for clinics and companies
+- Email and contact information collection
+- Data processing and cleaning
 
-### 💰 **Finance Data Pipeline**
-Pipeline completo para dados financeiros
-- Ingestão de APIs financeiras
-- Processamento com PySpark
-- Análises e relatórios automatizados
+### 💰 Finance Data Pipeline
+Complete pipeline for financial data
+- Financial API ingestion
+- Processing with PySpark
+- Automated analysis and reporting
 
-### 🚗 **Tesla Analytics**
-Análises específicas sobre dados da Tesla
-- Notebooks de EDA
-- Modelos preditivos
-- Dashboards de monitoramento
+### 🚗 Tesla Analytics
+Tesla-specific data analytics
+- EDA notebooks
+- Predictive models
+- Monitoring dashboards
 
-## 🛠️ Como Usar
+## 🛠️ How to Use
 
-### **Setup Inicial**
+### Initial Setup
 ```bash
-# Clone o repositório
+# Clone the repository
 git clone <repository-url>
 cd Data_Engineering_Playground
 
-# Instale as dependências
+# Install dependencies
 pip install -r requirements.txt
 
-# Configure as variáveis de ambiente
+# Configure environment variables
 cp .env.example .env
-# Edite o arquivo .env com suas configurações
+# Edit the .env file with your settings
 ```
 
-### **Executar Projetos**
+### Running Projects
 
 #### Cosgrove Analyzer
 ```bash
 python run_cosgrove_analyzer.py
-# ou
+# or
 streamlit run dashboards/cosgrove_dashboard.py
 ```
 
@@ -117,22 +117,22 @@ python kafka_stream.py
 
 ## 📋 Roadmap
 
-- [ ] Migração para estrutura organizada por projetos
-- [ ] Documentação completa de cada projeto
-- [ ] Testes automatizados
+- [ ] Migration to organized project structure
+- [ ] Complete documentation for each project
+- [ ] Automated tests
 - [ ] CI/CD pipeline
-- [ ] Monitoramento e alertas
-- [ ] Otimização de performance
+- [ ] Monitoring and alerts
+- [ ] Performance optimization
 
-## 🤝 Contribuições
+## 🤝 Contributions
 
-Este é um projeto pessoal, mas sinta-se à vontade para explorar e usar como referência. Se encontrar algo útil ou tiver sugestões, abra uma issue ou entre em contato.
+This is a personal project, but feel free to explore and use as a reference. If you find something useful or have suggestions, open an issue or get in touch.
 
-## 📝 Licença
+## 📝 License
 
-Projeto pessoal para fins educacionais e de desenvolvimento profissional.
+Personal project for educational and professional development purposes.
 
 ---
 
-**Desenvolvido com ❤️ para explorar o mundo da Engenharia de Dados**
+Developed by Alexsander Silveira
 
