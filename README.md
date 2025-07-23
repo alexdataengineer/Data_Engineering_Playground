@@ -77,6 +77,3 @@ Tesla-specific data analytics
 - EDA notebooks
 - Predictive models
 - Monitoring dashboards
-
-## 🛠️ How to Use
-
